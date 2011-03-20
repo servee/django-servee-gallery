@@ -5,7 +5,7 @@ setup(
     name = "django-servee-image",
     version = get_version(join="-"),
     license = '--',
-    description = "Inline object rendering for django, based on django-basic-apps + filters + templates",
+    description = "Image plugin for django-servee",
     long_description=open("README.rst").read(),
     author = 'Issac Kelly',
     author_email = 'issac@kellycreativetech.com',
