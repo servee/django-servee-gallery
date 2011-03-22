@@ -4,6 +4,6 @@ build/
 build/*
 dist/
 dist/*
-django_servee_image.egg-info/*
+django_servee_gallery.egg-info/*
 *dev.db
 *site_media

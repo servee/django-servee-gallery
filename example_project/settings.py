@@ -117,7 +117,7 @@ INSTALLED_APPS = [
     # Aloha, Dojo, and classics like FCK.  Please contribute.
     "servee.wysiwyg.tinymce",
 
-    "servee_image",
+    "servee_gallery",
     "easy_thumbnails",
     
     # minimal app that is used to write servee forms/registrations

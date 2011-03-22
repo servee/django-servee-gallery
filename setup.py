@@ -98,19 +98,19 @@ def find_package_data(
 
 
 README = read('README.rst')
-VERSION = __import__("servee_image").__version__
+VERSION = __import__("servee_gallery").__version__
 
 setup(
-    name = "django-servee-image",
+    name = "django-servee-gallery",
     version = VERSION,
-    url = 'http://github.com/servee/django-servee-image/',
+    url = 'http://github.com/servee/django-servee-gallery/',
     license = 'BSD',
     description = "Document Plugin for django-servee",
     long_description = README,
     author = 'Issac Kelly',
     author_email = 'issac@servee.com',
     packages = find_packages(exclude=["example_project*",]),
-    package_data = find_package_data('servee_image',only_in_packages=False),
+    package_data = find_package_data('servee_gallery',only_in_packages=False),
     install_requires = [
         'django-servee>0.5.5',
         'PIL',

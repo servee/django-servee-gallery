@@ -1,0 +1,10 @@
+{% load insert_tags %}
+{% load uni_form_tags %}
+{% load frontendadmin_tags %}
+
+{% frontendadmin_add insert.items "Add Gallery" "modal" %}
+<ul>
+{% for object in insert.items %}
+    {% include "servee/wysiwyg/insert/servee_gallery/_add.html" %}
+{% endfor %}
+</ul>

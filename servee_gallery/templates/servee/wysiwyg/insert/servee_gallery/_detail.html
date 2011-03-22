@@ -1,10 +1,8 @@
 {% load insert_tags %}
+{% load frontendadmin_tags %}
 {% load thumbnail %}
-	<div id="srv_insert_image_display">
-	   {% thumbnail object.image 175x225 as thumb %}
-	   <img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}" />
-	</div>
 	<h5 id="srv_insert_image_title">{{ object.title }}</h5>
+	{% frontendadmin_change object "Edit Gallery" "modal" %}
 	<p id="srv_insert_image_description"></p>
 	<input type="hidden" name="srv_insert_image_pk" id="srv_insert_image_pk" value="{{ object.pk }}">
 	<input type="button" class="srv_button insert" id="srv_insert_image_action" value="Place image at Cursor">
