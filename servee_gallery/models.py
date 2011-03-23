@@ -37,7 +37,7 @@ class BaseGalleryItem(models.Model):
     BaseGalleryItem
     """
     title = models.CharField(max_length=256, blank=True, null=True)
-    gallery = models.ForeignKey(Gallery)
+    gallery = models.ForeignKey(Gallery, related_name="items")
     order = models.PositiveIntegerField()
     description = models.TextField(blank=True, null=True)
     uploaded = models.DateTimeField(blank=True)

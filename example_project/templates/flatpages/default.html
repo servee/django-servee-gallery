@@ -1,11 +1,11 @@
 {% extends "site_base.html" %}
-{% load frontendadmin_tags %}
+{% load frontendadmin_tags inlines %}
 
 {% block site_title %}{{ flatpage.title }}{{ block.super }}{% endblock %}
 
 {% block body %}
 <h1>{{ flatpage.title }}</h1>
-{{ flatpage.content|safe }}
+{{ flatpage.content|safe|render_inlines }}
 
 {% frontendadmin_change flatpage "Edit This Flatpage" %}
 {% frontendadmin_delete flatpage "Delete This Flatpage" %}

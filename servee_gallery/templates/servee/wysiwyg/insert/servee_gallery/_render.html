@@ -1,3 +1,1 @@
-{% load thumbnail %}
-{% thumbnail object.image 400x300 as thumb %}
-<img src="{{ thumb.url }}" width="{{ thumb.width }}" height="{{ thumb.height }}"/>
+<div class="inline_replace " data-inline-type="servee_gallery.gallery" data-inline-id="{{ object.pk }}">

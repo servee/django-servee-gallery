@@ -10,6 +10,14 @@ SERVEE_GALLERY_INSERT_UPLOAD_TO
 
 There are no views or URLS for this project, it uses the default views, urls, and forms of the Servee ModelInsert class.
 
+Make sure to add the following to INSTALLED_APPS in your own projects::
+
+    "servee_gallery",
+    "improved_inlines",
+    "easy_thumbnails",
+    
+Also make sure that any content area on your site uses the |render_inline filter. 
+See templates/flatpages/default.html in the example_project for an implementation.
 
 To try it out:
 

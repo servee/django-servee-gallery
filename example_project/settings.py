@@ -119,6 +119,7 @@ INSTALLED_APPS = [
 
     "servee_gallery",
     "easy_thumbnails",
+    "improved_inlines",
     
     # minimal app that is used to write servee forms/registrations
     # for the flatpages app.  This is the convention for adding servee

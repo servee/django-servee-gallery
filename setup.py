@@ -115,6 +115,7 @@ setup(
         'django-servee>0.5.5',
         'PIL',
         'easy-thumbnails',
+        'django-improved-inlines',
     ],
     classifiers = [
         'Development Status :: 3 - Alpha',

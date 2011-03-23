@@ -1,14 +1,56 @@
 {% load insert_tags %}
-{% load frontendadmin_tags %}
+{% load uni_form_tags %}
 {% load thumbnail %}
-	<h5 id="srv_insert_image_title">{{ object.title }}</h5>
-	{% frontendadmin_change object "Edit Gallery" "modal" %}
-	<p id="srv_insert_image_description"></p>
-	<input type="hidden" name="srv_insert_image_pk" id="srv_insert_image_pk" value="{{ object.pk }}">
-	<input type="button" class="srv_button insert" id="srv_insert_image_action" value="Place image at Cursor">
+	<h5 id="srv_insert_gallery_title">{{ object.title }}</h5>
+	<form id="srv_upload_image" method="POST" enctype="multipart/form-data" class="servee uniform" action="{% url servee:insert_servee_gallery_gallery_image_add %}">
+        {% csrf_token %}
+        {{ image_form|as_uni_form }}
+        <input type="hidden" value="{{ object.pk }}" name="gallery_id" id="id_gallery_id" />
+        <div class="buttonHolder">
+            <input type="submit" class="srv_button insert button" id="srv_upload_image_action" value="Upload">
+        </div>
+    </form>
+    <script type="text/javascript" src="{{ STATIC_URL }}uploadify/swfobject.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}uploadify/jquery.uploadify.3.0.0.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        // uploadify
+
+    	$("form#srv_upload_image input[type=file]").uploadify({
+    		swf: "{{ STATIC_URL }}uploadify/uploadify.swf",
+            uploader: $("form#srv_upload_image").attr("action"),
+            cancelImage: "{{ STATIC_URL }}uploadify/uploadify-cancel.png",
+            auto: true,
+            buttonImage: "{{ STATIC_URL }}servee/images/buttonBG.png",
+            width: 90,
+            height: 24,
+            fileObjName: "image",
+            checkExisting: false,
+            multi: true,
+            postData: {
+                "csrfmiddlewaretoken": $("form#srv_upload_image [name=csrfmiddlewaretoken]").val(),
+                "gallery_id": "{{ object.pk }}"
+            },
+    		onUploadSuccess: function(file, response){
+    			$("ul.galleryThumbs").prepend(response);
+    		}
+    	});
+    	$("input#srv_upload_image_action").hide();
+    });
+    </script>
+	<ul class="galleryThumbs">
+	    {% for item in object.items.all %}
+	        {% include "servee/wysiwyg/insert/servee_gallery/_add_image.html" %}
+	    {% endfor %}
+	</ul>
+	
+	
+	
+	<input type="hidden" name="srv_insert_gallery_pk" id="srv_insert_gallery_pk" value="{{ object.pk }}">
+	<input type="button" class="srv_button insert" id="srv_insert_gallery_action" value="Place Gallery at Cursor">
 <script type="text/javascript">
 $(document).ready(function(){
-	$("input#srv_insert_image_action").click(function(e){
+	$("input#srv_insert_gallery_action").click(function(e){
         $.ajax({
 		    url: "{% insert_render_url insert object.pk %}",
 		    success: function(data, text){
