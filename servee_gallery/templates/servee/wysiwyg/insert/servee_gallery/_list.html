@@ -1,6 +1,35 @@
 {% load insert_tags %}
 {% load uni_form_tags %}
-<ul>
+{% load frontendadmin_tags %}
+
+<form id="srv_create_gallery" method="POST" enctype="multipart/form-data" class="servee uniform" action="{% url servee:insert_servee_gallery_gallery_add %}">
+    {% csrf_token %}
+    {{ form|as_uni_form }}
+    <div class="buttonHolder">
+        <input type="submit" class="srv_button insert button" id="srv_create_gallery_action" value="New Gallery">
+    </div>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("form#srv_create_gallery").submit(function(e){
+	    var $form = $(this);
+	    $.ajax({
+	        url: $form.attr("action"),
+	        data: $form.serialize(),
+	        type: $form.attr("method"),
+	        success: function(data, text){
+	            $("#gallerylist").prepend(data);
+	        }
+	    });
+	    
+	    e.preventDefault();
+	    return false;
+	});
+});
+</script>
+
+<ul id="gallerylist">
 {% for object in insert.items %}
     {% include "servee/wysiwyg/insert/servee_gallery/_add.html" %}
 {% endfor %}
