@@ -34,6 +34,17 @@ class GalleryInsert(ModelInsert):
         
         super(GalleryInsert, self).__init__(*args, **kwargs)
     
+    
+    @csrf_exempt
+    def reorder(self, request):
+        idents_in_order = request.POST.getlist("itemid")
+        for i, ident in enumerate(idents_in_order):
+            img = Image.objects.get(pk=ident)
+            img.order = i + 1
+            img.save()
+        return HttpResponse("")
+            
+    
     @csrf_exempt
     def add_image_view(self, request):
         """
@@ -50,7 +61,13 @@ class GalleryInsert(ModelInsert):
             # Set the gallery, order, and save
             gallery = Gallery.objects.get(pk=request.POST["gallery_id"])
             new_instance.gallery = gallery
-            new_instance.order = Image.objects.filter(gallery=gallery).order_by("-order").values_list("order", flat=True)[1] + 1
+            
+            gallery_items = Image.objects.filter(gallery=gallery).order_by("-order").values_list("order", flat=True)
+            if gallery_items:
+                new_instance.order = gallery_items[0] + 1
+            else:
+                new_instance.order = 1
+            
             new_instance.save()
             
             #render the new display to the page.
@@ -84,6 +101,9 @@ class GalleryInsert(ModelInsert):
             url(r"^add_minimal_image/$",
                 self.add_image_view,
                 name="insert_servee_gallery_gallery_image_add"),
+            url(r"^reorder/$",
+                self.reorder,
+                name="insert_servee_gallery_gallery_reorder"),
         ) + super(GalleryInsert, self).get_urls()
     
     

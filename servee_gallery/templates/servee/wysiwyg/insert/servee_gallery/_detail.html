@@ -12,10 +12,35 @@
     </form>
     <script type="text/javascript" src="{{ STATIC_URL }}uploadify/swfobject.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}uploadify/jquery.uploadify.3.0.0.min.js"></script>
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-ui/js/jquery-ui-1.8.11.custom.min.js"></script>
+    
     <script type="text/javascript">
     $(document).ready(function(){
+        $('html').ajaxSend(function(event, xhr, settings) {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                // Only send the token to relative URLs i.e. locally.
+                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+            }
+        });
+        
         // uploadify
-
+        
     	$("form#srv_upload_image input[type=file]").uploadify({
     		swf: "{{ STATIC_URL }}uploadify/uploadify.swf",
             uploader: $("form#srv_upload_image").attr("action"),
@@ -33,12 +58,27 @@
             },
     		onUploadSuccess: function(file, response){
     			$("ul.galleryThumbs").prepend(response);
+            	
+            	$("#id_galleryThumbs").sortable("destroy");
+            	$("#id_galleryThumbs").sortable();
     		}
     	});
     	$("input#srv_upload_image_action").hide();
+    	
+    	$("#id_galleryThumbs").sortable();
+        $("#id_galleryThumbs").disableSelection();
+        
+        $("#id_galleryThumbs").live("sortstop", function(event, ui){
+            var $sortable = $(this);
+            $.ajax({
+                url: "{% url servee:insert_servee_gallery_gallery_reorder %}",
+                type: "post",
+                data: $sortable.sortable("serialize", {key:"itemid"})
+            });
+        });
     });
     </script>
-	<ul class="galleryThumbs">
+	<ul class="galleryThumbs" id="id_galleryThumbs">
 	    {% for item in object.items.all %}
 	        {% include "servee/wysiwyg/insert/servee_gallery/_add_image.html" %}
 	    {% endfor %}

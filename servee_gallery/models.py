@@ -15,6 +15,7 @@ class BaseGallery(models.Model):
     
     def save(self, *args, **kwargs):
         self.modified = datetime.datetime.now()
+        
         if not self.slug:
             self.slug = slugify(self.title)
         
@@ -63,7 +64,6 @@ class BaseGalleryItem(models.Model):
     class Meta:
         abstract = True
         ordering = ("gallery", "order")
-        unique_together = ("gallery", "order")
     
 class Image(BaseGalleryItem):
     """

@@ -1,1 +1,1 @@
-{% load insert_tags thumbnail %}<li><a href="{% insert_detail_url insert object.pk %}">{{ object.title }}.</a></li>
+{% load insert_tags thumbnail %}<li id="{{ object.pk }}"><a href="{% insert_detail_url insert object.pk %}">{% firstof object.title object.created|date:"M j y" %}</a></li>
