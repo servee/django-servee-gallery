@@ -112,9 +112,6 @@ setup(
     packages = find_packages(exclude=["example_project*",]),
     package_data = find_package_data('servee_gallery',only_in_packages=False),
     install_requires = [
-        'django-servee>0.5.5',
-        'PIL',
-        'easy-thumbnails',
         'django-improved-inlines',
     ],
     classifiers = [
