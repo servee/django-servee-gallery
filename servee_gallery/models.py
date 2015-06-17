@@ -88,4 +88,4 @@ class Image(BaseGalleryItem):
     class Meta:
         verbose_name = "servee gallery image"
         verbose_name_plural = "servee gallery images"
-        ordering = ["modified",]
+        ordering = ["order", "modified"]

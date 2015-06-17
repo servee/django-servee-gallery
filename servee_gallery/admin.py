@@ -8,5 +8,5 @@ class ImageInline(admin.TabularInline):
 class GalleryAdmin(admin.ModelAdmin):
     list_display = ("title",)
     inlines = [ImageInline,]
-    
+
 admin.site.register(Gallery, GalleryAdmin)
