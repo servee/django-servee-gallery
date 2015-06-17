@@ -69,7 +69,7 @@ class BaseGalleryItem(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ("gallery", "order")
+        ordering = ("order", "gallery")
 
 class Image(BaseGalleryItem):
     """
