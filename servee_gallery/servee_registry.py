@@ -23,7 +23,7 @@ class GalleryInsert(ModelInsert):
 
     def __init__(self, *args, **kwargs):
         self.item_add_image_template = [
-            "servee/wysiwyg/insert/%s/%s/_add_image.html" % (self.model._meta.app_label, self.model._meta.module_name),
+            "servee/wysiwyg/insert/%s/%s/_add_image.html" % (self.model._meta.app_label, self.model._meta.model_name),
             "servee/wysiwyg/insert/%s/_add_image.html" % (self.model._meta.app_label),
         ]
 
