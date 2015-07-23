@@ -91,7 +91,7 @@ class GalleryInsert(ModelInsert):
         """
         Returns urls to get the panel, get/filter list, add/upload, delete and get rendered output.
         """
-        from django.conf.urls.defaults import patterns, url
+        from django.conf.urls import patterns, url
         def wrap(view):
             def wrapper(*args, **kwargs):
                 return self.admin_site.admin_view(view)(*args, **kwargs)
