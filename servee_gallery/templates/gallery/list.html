@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load frontendadmin_tags chunks staticfiles thumbnail %}
+
+
+{% block main-content-wrap %}
+      <!-- big gallery goes here -->
+      {% frontendadmin_add project_list "Add Project" %}
+      <ul class="project-links">
+        {% for project in project_list %}
+        <li>
+          <a class="fancybox" href="#id_overlay_{{ project.id }}" data-fancybox-width="1200" data-fancybox-height="800">
+            {% thumbnail project.feature_image "470x420" crop="center" as big %}
+            <img src="{{ big.url }}" alt="{{ project.title }}">
+            {% endthumbnail %}
+            <span class="text">
+              <span class="title">{{ project.title }}</span>
+              <span class="location">{{ project.location }}</span>
+            </span>
+          </a>
+          {% frontendadmin_change project "Edit this project" %}
+        </li>
+
+        {% endfor %}
+
+      </ul>
+
+
+        {% for project in project_list %}
+        <div id="id_overlay_{{ project.id }}" style="display:none;">
+          <div class="text-center">
+            <h1 class="project-title">{{ project.title }}</h1>
+            <h5 class="project-sub">{{ project.subtitle }}</h5>
+          </div>
+          <div class="l-container">
+            <div class="l-two-thirds">
+              <div class="slider-inside-overlay">
+                {% for im in project.items.all %}
+                  {% thumbnail im.image "800x600" crop="center" as biggallery %}
+                  <div><img src="{{ biggallery.url }}"></div>
+                  {% endthumbnail %}
+                {% endfor %}
+              </div>
+            </div>
+            <div class="l-one-third l-last">
+              <p><strong class="red-text">CLIENT:</strong> {{ project.client }}<br>
+              <strong class="red-text">LOCATION:</strong> {{ project.location }}<br>
+              <strong class="red-text">SERVICES:</strong> {{ project.services}} </p>
+              <div class="small">
+                {{ project.description|safe }}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+{% endblock main-content-wrap %}

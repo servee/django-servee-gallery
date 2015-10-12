@@ -3,6 +3,7 @@ from servee_gallery.models import Gallery, Image
 
 class ImageInline(admin.TabularInline):
     list_display = ("title",)
+    exclude = ["uploaded", "modified"]
     model = Image
 
 class GalleryAdmin(admin.ModelAdmin):

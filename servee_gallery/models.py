@@ -8,8 +8,14 @@ class BaseGallery(models.Model):
     BaseGallery
     """
     title = models.CharField(max_length=256, blank=True, null=True)
+    subtitle = models.CharField(max_length=256, blank=True, null=True)
+    client = models.CharField(max_length=256, blank=True, null=True)
+    location = models.CharField(max_length=256, blank=True, null=True)
+    services = models.CharField(max_length=256, blank=True, null=True)
+    feature_image = models.ImageField(upload_to="gallery_imgs", blank=True, null=True, help_text="This image will be resized to 470x420")
     slug = models.SlugField(max_length=128, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(blank=True)
     modified = models.DateTimeField(blank=True)
 
@@ -25,6 +31,7 @@ class BaseGallery(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ["order", "modified"]
 
     def __unicode__(self):
         if self.title:
@@ -45,7 +52,7 @@ class BaseGalleryItem(models.Model):
     """
     title = models.CharField(max_length=256, blank=True, null=True)
     gallery = models.ForeignKey(Gallery, related_name="items")
-    order = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(default=0)
     description = models.TextField(blank=True, null=True)
     uploaded = models.DateTimeField(blank=True)
     modified = models.DateTimeField(blank=True)
@@ -76,7 +83,8 @@ class Image(BaseGalleryItem):
     """
     image = models.ImageField(
         upload_to=IMAGE_UPLOAD_TO,
-        storage=DEFAULT_STORAGE()
+        storage=DEFAULT_STORAGE(),
+        help_text="This image will be resized to 800x600"
     )
 
     def save(self, *args, **kwargs):
