@@ -97,14 +97,14 @@ class GalleryInsert(ModelInsert):
                 return self.admin_site.admin_view(view)(*args, **kwargs)
             return update_wrapper(wrapper, view)
 
-        return patterns("",
+        return [
             url(r"^add_minimal_image/$",
                 self.add_image_view,
                 name="insert_servee_gallery_gallery_image_add"),
             url(r"^reorder/$",
                 self.reorder,
                 name="insert_servee_gallery_gallery_reorder"),
-        ) + super(GalleryInsert, self).get_urls()
+        ] + super(GalleryInsert, self).get_urls()
 
 
     def get_add_image_form(self):
