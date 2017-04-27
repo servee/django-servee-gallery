@@ -1,5 +1,5 @@
 from django.forms.models import modelform_factory
-from django.contrib.admin.util import unquote
+from django.contrib.admin.utils import unquote
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.template.loader import select_template
